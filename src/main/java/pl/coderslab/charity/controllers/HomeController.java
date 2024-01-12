@@ -27,7 +27,6 @@ public class HomeController {
 
     @RequestMapping("/")
     public String homeAction(Model model){
-        List<Donation> donations = donationRepository.findAll();
         List<Institution> institutions = institutionRepository.findAll();
         List<Institution> evenInstitutions = new ArrayList<>();
         List<Institution> oddInstitutions = new ArrayList<>();
