@@ -3,7 +3,6 @@ package pl.coderslab.charity.controllers;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import pl.coderslab.charity.entities.Donation;
 import pl.coderslab.charity.entities.Institution;
 import pl.coderslab.charity.repositories.CategoryRepository;
 import pl.coderslab.charity.repositories.DonationRepository;
@@ -42,5 +41,11 @@ public class HomeController {
         model.addAttribute("countQuantity", donationRepository.countQuantity());
         model.addAttribute("countDonations", donationRepository.countDonations());
         return "index";
+    }
+    @RequestMapping("/form")
+    public String formAction(Model model){
+        model.addAttribute("categories", categoryRepository.findAll());
+        model.addAttribute("institutions", institutionRepository.findAll());
+        return "form/form";
     }
 }
