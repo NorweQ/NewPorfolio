@@ -3,6 +3,8 @@ package pl.coderslab.charity.controllers;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import pl.coderslab.charity.entities.Category;
 import pl.coderslab.charity.entities.Institution;
 import pl.coderslab.charity.repositories.CategoryRepository;
 import pl.coderslab.charity.repositories.DonationRepository;
@@ -44,6 +46,21 @@ public class HomeController {
     }
     @RequestMapping("/form")
     public String formAction(Model model){
+
+        model.addAttribute("categories", categoryRepository.findAll());
+        model.addAttribute("institutions", institutionRepository.findAll());
+        return "form/form";
+    }
+    @RequestMapping("/form/confirm")
+    public String formActionConfirmed(Model model,  @RequestParam String street,
+                                      @RequestParam String city,
+                                      @RequestParam String zipCode,
+                                      @RequestParam String phone,
+                                      @RequestParam String pickUpDate,
+                                      @RequestParam String pickUpTime,
+                                      @RequestParam String pickUpComment,
+                                      @RequestParam List<Category> categories,
+                                      @RequestParam Long institutionId){
         model.addAttribute("categories", categoryRepository.findAll());
         model.addAttribute("institutions", institutionRepository.findAll());
         return "form/form";

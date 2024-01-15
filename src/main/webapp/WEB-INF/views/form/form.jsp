@@ -24,7 +24,7 @@
     <div class="form--steps-container">
         <div class="form--steps-counter">Krok <span>1</span>/4</div>
 
-        <form action="form-confirmation.html" method="post">
+        <form action="/form/confirm" method="post">
             <!-- STEP 1: class .active is switching steps -->
             <div data-step="1" class="active">
                 <h3>Zaznacz co chcesz oddać:</h3>
@@ -195,23 +195,23 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        // Znajdź przycisk "Dalej" po id
-        var nextButton = document.getElementById("nextButton");
 
-        // Nasłuchuj zdarzenia kliknięcia na przycisku "Dalej"
+        const nextButton = document.getElementById("nextButton");
+
+
         nextButton.addEventListener("click", function () {
-            // Pobierz wartości z formularza
-            var bags = document.querySelector("input[name='quantity']").value;
-            var institution = document.querySelector("input[name='institution']:checked").value;
-            var street = document.querySelector("input[name='street']").value;
-            var city = document.querySelector("input[name='city']").value;
-            var zipCode = document.querySelector("input[name='zipCode']").value;
-            var phone = document.querySelector("input[name='phone']").value;
-            var pickUpDate = document.querySelector("input[name='pickUpDate']").value;
-            var pickUpTime = document.querySelector("input[name='pickUpTime']").value;
-            var pickUpComment = document.querySelector("textarea[name='pickUpComment']").value;
 
-            // Aktualizuj podsumowanie
+            const bags = document.querySelector("input[name='quantity']").value;
+            const institution = document.querySelector("input[name='institution']:checked").value;
+            const street = document.querySelector("input[name='street']").value;
+            const city = document.querySelector("input[name='city']").value;
+            const zipCode = document.querySelector("input[name='zipCode']").value;
+            const phone = document.querySelector("input[name='phone']").value;
+            const pickUpDate = document.querySelector("input[name='pickUpDate']").value;
+            const pickUpTime = document.querySelector("input[name='pickUpTime']").value;
+            const pickUpComment = document.querySelector("textarea[name='pickUpComment']").value;
+
+
             document.getElementById("summaryBags").innerHTML = '<span class="icon icon-bag"></span><span class="summary--text">' + bags + ' worków z darami</span>';
             document.getElementById("summaryInstitution").innerHTML = '<span class="icon icon-hand"></span><span class="summary--text">Dla fundacji "' + institution + '" </span>';
             document.getElementById("summaryStreet").textContent = street;
@@ -222,9 +222,9 @@
             document.getElementById("summaryPickUpTime").textContent = pickUpTime;
             document.getElementById("summaryPickUpComment").textContent = pickUpComment;
 
-            // Przełącz do następnego kroku
-            var currentStep = nextButton.closest("[data-step]");
-            var nextStep = currentStep.nextElementSibling;
+
+            const currentStep = nextButton.closest("[data-step]");
+            const nextStep = currentStep.nextElementSibling;
             currentStep.classList.remove("active");
             nextStep.classList.add("active");
         });
