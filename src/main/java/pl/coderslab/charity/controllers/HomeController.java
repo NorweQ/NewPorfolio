@@ -1,15 +1,19 @@
 package pl.coderslab.charity.controllers;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import pl.coderslab.charity.entities.Category;
+import pl.coderslab.charity.entities.Donation;
 import pl.coderslab.charity.entities.Institution;
 import pl.coderslab.charity.repositories.CategoryRepository;
 import pl.coderslab.charity.repositories.DonationRepository;
 import pl.coderslab.charity.repositories.InstitutionRepository;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,23 +50,34 @@ public class HomeController {
     }
     @RequestMapping("/form")
     public String formAction(Model model){
-
         model.addAttribute("categories", categoryRepository.findAll());
         model.addAttribute("institutions", institutionRepository.findAll());
         return "form/form";
     }
     @RequestMapping("/form/confirm")
-    public String formActionConfirmed(Model model,  @RequestParam String street,
+    public String formActionConfirmed(@RequestParam String street,
                                       @RequestParam String city,
                                       @RequestParam String zipCode,
+                                      @RequestParam Integer quantity,
                                       @RequestParam String phone,
-                                      @RequestParam String pickUpDate,
-                                      @RequestParam String pickUpTime,
+                                      @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate pickUpDate,
+                                      @RequestParam LocalTime pickUpTime,
                                       @RequestParam String pickUpComment,
                                       @RequestParam List<Category> categories,
-                                      @RequestParam Long institutionId){
-        model.addAttribute("categories", categoryRepository.findAll());
-        model.addAttribute("institutions", institutionRepository.findAll());
-        return "form/form";
+                                      @RequestParam String institutionName){
+        Donation donation = new Donation();
+        Institution institution = institutionRepository.findInstitutionByName(institutionName);
+        donation.setStreet(street);
+        donation.setCity(city);
+        donation.setZipCode(zipCode);
+        donation.setQuantity(quantity);
+//        donation.setPhone(phone);
+        donation.setPickUpDate(pickUpDate);
+        donation.setPickUpTime(pickUpTime);
+        donation.setPickUpComment(pickUpComment);
+        donation.setCategories(categories);
+        donation.setInstitution(institution);
+        donationRepository.save(donation);
+        return "redirect:/form";
     }
 }
